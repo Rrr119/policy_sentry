@@ -1,0 +1,100 @@
+{
+  "Records": [
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T15:30:00Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "GetRole",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.3.1.20",
+      "userAgent": "console.amazonaws.com",
+      "requestParameters": { "roleName": "deploy-role" },
+      "resources": [
+        { "type": "AWS::IAM::Role", "ARN": "arn:aws:iam::123456789012:role/deploy-role" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "33333333-0003-4000-8000-000000000001"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T15:30:05Z",
+      "eventSource": "iam.amazonaws.com",
+      "eventName": "ListRoles",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.3.1.20",
+      "userAgent": "console.amazonaws.com",
+      "requestParameters": { "maxItems": 100 },
+      "recipientAccountId": "123456789012",
+      "eventID": "33333333-0003-4000-8000-000000000002"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T15:31:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "GetBucketPolicy",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.3.1.20",
+      "userAgent": "console.amazonaws.com",
+      "requestParameters": { "bucketName": "acme-audit-logs", "policy": "" },
+      "resources": [
+        { "type": "AWS::S3::Bucket", "ARN": "arn:aws:s3:::acme-audit-logs" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "33333333-0003-4000-8000-000000000003"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T15:32:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "PutBucketPolicy",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.3.1.20",
+      "userAgent": "console.amazonaws.com",
+      "requestParameters": { "bucketName": "acme-audit-logs" },
+      "resources": [
+        { "type": "AWS::S3::Bucket", "ARN": "arn:aws:s3:::acme-audit-logs" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "33333333-0003-4000-8000-000000000004"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T15:33:00Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "DescribeSecurityGroups",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.3.1.20",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "maxResults": 100 },
+      "recipientAccountId": "123456789012",
+      "eventID": "33333333-0003-4000-8000-000000000005"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T15:33:05Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "DescribeVpcs",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.3.1.20",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "maxResults": 100 },
+      "recipientAccountId": "123456789012",
+      "eventID": "33333333-0003-4000-8000-000000000006"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T15:34:00Z",
+      "eventSource": "sns.amazonaws.com",
+      "eventName": "Publish",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.3.1.20",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "topicArn": "arn:aws:sns:us-east-1:123456789012:security-alerts" },
+      "resources": [
+        { "type": "AWS::SNS::Topic", "ARN": "arn:aws:sns:us-east-1:123456789012:security-alerts" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "33333333-0003-4000-8000-000000000007"
+    }
+  ]
+}

@@ -21,7 +21,7 @@ from policy_sentry.querying.all import get_all_actions
 from policy_sentry.querying.arns import get_resource_type_name_with_raw_arn
 from policy_sentry.shared.constants import POLICY_LANGUAGE_VERSION
 from policy_sentry.util.actions import get_lowercase_action_list
-from policy_sentry.util.arns import does_arn_match, get_service_from_arn, parse_arn
+from policy_sentry.util.arns import arn_matches_format, does_arn_match, get_service_from_arn, parse_arn
 from policy_sentry.util.text import capitalize_first_character, strip_special_characters
 from policy_sentry.writing.minimize import minimize_statement_actions
 from policy_sentry.writing.validate import check_actions_schema, check_crud_schema
@@ -452,6 +452,104 @@ class SidGroup:
         logger.debug("Getting the rendered policy")
         return self.get_rendered_policy()
 
+    def add_by_actions_and_arns(
+        self,
+        supplied_actions: list[str],
+        action_resource_arns: dict[str, list[str]] | None = None,
+        include_dependent_actions: bool = False,
+    ) -> dict[str, Any]:
+        """
+        Build a least-privilege policy from exact actions bound to concrete ARNs.
+
+        Unlike :meth:`add_by_list_of_actions`, which renders the ARN *formats*
+        from the IAM database, this method binds each action to the concrete
+        resource ARNs supplied by the caller (typically observed in access
+        logs). Actions without a matching resource ARN are placed in the
+        wildcard-only namespace so the resulting policy still covers the call.
+
+        The broad access-level action expansion performed by
+        :meth:`add_by_arn_and_access_level` is pruned back to exactly
+        ``supplied_actions`` (plus documented dependent actions when requested),
+        which guarantees the policy contains no unrelated actions.
+
+        Arguments:
+            supplied_actions: Exact IAM actions to allow.
+            action_resource_arns: Map of lowercase-or-canonical action to the
+                concrete resource ARNs it should be constrained to.
+            include_dependent_actions: Also keep AWS-documented dependent actions.
+        """
+        arn_map = {key.lower(): list(value) for key, value in (action_resource_arns or {}).items()}
+
+        for action in supplied_actions:
+            if not action or ":" not in action:
+                logger.debug("Skipping malformed action: %s", action)
+                continue
+            service_name, action_name = action.split(":", 1)
+            action_data = get_action_data(service_name, action_name)
+            rows = action_data.get(service_name, [])
+            preferred_arns = arn_map.get(action.lower(), [])
+
+            resource_scoped = False
+            for row in rows:
+                raw_arn_format = row["resource_arn_format"]
+                if raw_arn_format == "*" or not preferred_arns:
+                    continue
+                matched_arns: list[str] = []
+                for arn in preferred_arns:
+                    if arn not in matched_arns and arn_matches_format(arn, raw_arn_format):
+                        matched_arns.append(arn)
+                if matched_arns:
+                    self.add_by_arn_and_access_level(matched_arns, row["access_level"])
+                    resource_scoped = True
+
+            if not resource_scoped:
+                logger.debug("Action %s has no matching concrete ARN; adding with Resource '*'", action)
+                self.add_action_without_resource_constraint(action)
+
+        actions_to_keep = list(supplied_actions)
+        if include_dependent_actions:
+            dependent_actions = [
+                action for action in get_dependent_actions(supplied_actions) if action not in supplied_actions
+            ]
+            actions_to_keep.extend(dependent_actions)
+
+        self.remove_actions_not_matching_these(actions_to_keep)
+        self.remove_cross_level_action_duplicates()
+        self.remove_actions_duplicated_in_wildcard_arn()
+        return self.get_rendered_policy()
+
+    def remove_cross_level_action_duplicates(self) -> None:
+        """
+        Remove an action from a resource SID whose access level disagrees with
+        the action's own access level when the action also lives in a matching
+        SID.
+
+        Dependency expansion can copy a Read action (e.g. ``dynamodb:GetItem``)
+        into a Write-level SID for the same ARN. For exact, log-derived
+        policies that duplicate is redundant; keep the correctly-leveled copy.
+        Wildcard (``Resource: "*"``) SIDs are left untouched.
+        """
+        resource_sids = {sid: group for sid, group in self.sids.items() if group.get("arn_format") not in (None, "*")}
+        action_to_sids: dict[str, list[str]] = {}
+        for sid, group in resource_sids.items():
+            for action in group["actions"]:
+                action_to_sids.setdefault(action, []).append(sid)
+
+        for action, sid_names in action_to_sids.items():
+            if len(sid_names) < 2 or ":" not in action:
+                continue
+            service_name, action_name = action.split(":", 1)
+            rows = get_action_data(service_name, action_name).get(service_name, [])
+            action_levels = {row["access_level"] for row in rows}
+            matching_sids = [sid for sid in sid_names if self.sids[sid].get("access_level") in action_levels]
+            if not matching_sids:
+                continue
+            for sid in sid_names:
+                if sid not in matching_sids and action in self.sids[sid]["actions"]:
+                    self.sids[sid]["actions"].remove(action)
+
+        self.remove_sids_with_empty_action_lists()
+
     def process_template(self, cfg: dict[str, Any], minimize: int | None = None) -> dict[str, Any]:
         """
         Process the Policy Sentry template as a dict. This auto-detects whether or not the file is in CRUD mode or
@@ -554,7 +652,12 @@ class SidGroup:
             if "actions" in cfg:
                 cfg_actions = cfg["actions"]
                 if cfg_actions is not None and cfg_actions[0] != "":
-                    self.add_by_list_of_actions(cfg_actions)
+                    cfg_resource_arns = cfg.get("resource-arns")
+                    if cfg_resource_arns:
+                        logger.debug("Actions mode with concrete resource ARN constraints")
+                        self.add_by_actions_and_arns(cfg_actions, cfg_resource_arns)
+                    else:
+                        self.add_by_list_of_actions(cfg_actions)
 
         return self.get_rendered_policy(minimize, effect=effect)
 

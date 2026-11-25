@@ -1,0 +1,17 @@
+{
+  "root": "/home/dev/feedback/uid38832",
+  "B": "/home/dev/feedback/uid38832",
+  "sha": "95cb45240d8f4bc42a1b24f437c2a985bc370445",
+  "wslDistro": "Ubuntu-26.04",
+  "source": {
+    "owner": "salesforce",
+    "repo": "policy_sentry",
+    "sha": "95cb45240d8f4bc42a1b24f437c2a985bc370445"
+  },
+  "fork": {
+    "owner": "Rrr119",
+    "repo": "policy_sentry",
+    "cloneUrl": "https://github.com/Rrr119/policy_sentry.git"
+  },
+  "at": "2026-11-25T18:10:52.231Z"
+}

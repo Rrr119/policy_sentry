@@ -1,0 +1,17 @@
+mode: crud
+name: 02-web-api-crud
+read:
+- arn:aws:dynamodb:us-east-1:123456789012:table/Products
+- arn:aws:secretsmanager:us-east-1:123456789012:secret:prod-db-password-AbC12
+- arn:aws:sqs:us-east-1:123456789012:order-events
+write:
+- arn:aws:dynamodb:us-east-1:123456789012:table/Orders
+- arn:aws:lambda:us-east-1:123456789012:function:order-processor
+- arn:aws:sqs:us-east-1:123456789012:order-events
+list: []
+tagging: []
+permissions-management: []
+wildcard-only:
+  single-actions:
+  - sts:GetCallerIdentity
+skip-resource-constraints: []

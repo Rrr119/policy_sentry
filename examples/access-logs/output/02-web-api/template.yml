@@ -1,0 +1,29 @@
+mode: actions
+name: 02-web-api
+actions:
+- dynamodb:GetItem
+- dynamodb:PutItem
+- dynamodb:Query
+- lambda:InvokeFunction
+- secretsmanager:GetSecretValue
+- sqs:DeleteMessage
+- sqs:ReceiveMessage
+- sqs:SendMessage
+- sts:GetCallerIdentity
+resource-arns:
+  dynamodb:GetItem:
+  - arn:aws:dynamodb:us-east-1:123456789012:table/Products
+  dynamodb:PutItem:
+  - arn:aws:dynamodb:us-east-1:123456789012:table/Orders
+  dynamodb:Query:
+  - arn:aws:dynamodb:us-east-1:123456789012:table/Products
+  lambda:InvokeFunction:
+  - arn:aws:lambda:us-east-1:123456789012:function:order-processor
+  secretsmanager:GetSecretValue:
+  - arn:aws:secretsmanager:us-east-1:123456789012:secret:prod-db-password-AbC12
+  sqs:DeleteMessage:
+  - arn:aws:sqs:us-east-1:123456789012:order-events
+  sqs:ReceiveMessage:
+  - arn:aws:sqs:us-east-1:123456789012:order-events
+  sqs:SendMessage:
+  - arn:aws:sqs:us-east-1:123456789012:order-events

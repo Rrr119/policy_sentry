@@ -1,0 +1,83 @@
+{
+  "group": "Data pipeline (S3/DynamoDB/KMS/Lambda/EC2)",
+  "actions": {
+    "before": 1223,
+    "after": 10,
+    "removed": 1213,
+    "reduction_percent": 99.18
+  },
+  "statements": {
+    "before": 1,
+    "after": 8
+  },
+  "services": {
+    "before": 5,
+    "after": 5
+  },
+  "wildcard_resource_statements": {
+    "before": 1,
+    "after": 1
+  },
+  "actions_on_wildcard_resource": {
+    "before": 1223,
+    "after": 2
+  },
+  "concrete_resources": {
+    "before": 0,
+    "after": 7
+  },
+  "before_summary": {
+    "statement_count": 1,
+    "action_pattern_count": 5,
+    "expanded_action_count": 1223,
+    "service_count": 5,
+    "services": [
+      "dynamodb",
+      "ec2",
+      "kms",
+      "lambda",
+      "s3"
+    ],
+    "wildcard_resource_statements": 1,
+    "wildcard_resource_action_count": 1223,
+    "concrete_resource_count": 0,
+    "concrete_resources": [],
+    "full_action_wildcard": false
+  },
+  "after_summary": {
+    "statement_count": 8,
+    "action_pattern_count": 10,
+    "expanded_action_count": 10,
+    "service_count": 5,
+    "services": [
+      "dynamodb",
+      "ec2",
+      "kms",
+      "lambda",
+      "s3"
+    ],
+    "wildcard_resource_statements": 1,
+    "wildcard_resource_action_count": 2,
+    "concrete_resource_count": 7,
+    "concrete_resources": [
+      "arn:aws:dynamodb:us-east-1:123456789012:table/PipelineCheckpoints",
+      "arn:aws:kms:us-east-1:123456789012:key/11111111-2222-3333-4444-555555555555",
+      "arn:aws:lambda:us-east-1:123456789012:function:etl-curator",
+      "arn:aws:s3:::acme-data-lake",
+      "arn:aws:s3:::acme-data-lake/curated/2026-11-25.parquet",
+      "arn:aws:s3:::acme-data-lake/raw/events/2026/11/25/a.json",
+      "arn:aws:s3:::acme-data-lake/raw/events/2026/11/25/b.json"
+    ],
+    "full_action_wildcard": false
+  },
+  "coverage": {
+    "total_calls": 11,
+    "covered_calls": 11,
+    "all_covered": true,
+    "missing": [],
+    "extra_actions": [],
+    "has_unrelated_actions": false
+  },
+  "least_privilege_verified": true,
+  "template_roundtrip_matches_policy": true
+}

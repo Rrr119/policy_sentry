@@ -1,0 +1,17 @@
+mode: crud
+name: 03-security-ops-crud
+read:
+- arn:aws:iam::123456789012:role/deploy-role
+- arn:aws:s3:::acme-audit-logs
+write:
+- arn:aws:sns:us-east-1:123456789012:security-alerts
+list: []
+tagging: []
+permissions-management:
+- arn:aws:s3:::acme-audit-logs
+wildcard-only:
+  single-actions:
+  - ec2:DescribeSecurityGroups
+  - ec2:DescribeVpcs
+  - iam:ListRoles
+skip-resource-constraints: []

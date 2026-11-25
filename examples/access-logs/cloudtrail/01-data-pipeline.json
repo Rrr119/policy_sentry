@@ -1,0 +1,167 @@
+{
+  "Records": [
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:02:03Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "DescribeRegions",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "allRegions": false },
+      "recipientAccountId": "123456789012",
+      "userIdentity": { "type": "AssumedRole", "arn": "arn:aws:sts::123456789012:assumed-role/pipeline-runner/session" },
+      "eventID": "11111111-0001-4000-8000-000000000001"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:02:04Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "ListBucket",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "bucketName": "acme-data-lake", "prefix": "raw/events/2026/11/25/" },
+      "resources": [
+        { "type": "AWS::S3::Bucket", "ARN": "arn:aws:s3:::acme-data-lake", "accountId": "123456789012" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000002"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:02:05Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "bucketName": "acme-data-lake", "key": "raw/events/2026/11/25/a.json" },
+      "resources": [
+        { "type": "AWS::S3::Object", "ARN": "arn:aws:s3:::acme-data-lake/raw/events/2026/11/25/a.json" },
+        { "type": "AWS::S3::Bucket", "ARN": "arn:aws:s3:::acme-data-lake", "accountId": "123456789012" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000003"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:02:06Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "GetObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "bucketName": "acme-data-lake", "key": "raw/events/2026/11/25/b.json" },
+      "resources": [
+        { "type": "AWS::S3::Object", "ARN": "arn:aws:s3:::acme-data-lake/raw/events/2026/11/25/b.json" },
+        { "type": "AWS::S3::Bucket", "ARN": "arn:aws:s3:::acme-data-lake", "accountId": "123456789012" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000004"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:04:11Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "PutObject",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "bucketName": "acme-data-lake", "key": "curated/2026-11-25.parquet" },
+      "resources": [
+        { "type": "AWS::S3::Object", "ARN": "arn:aws:s3:::acme-data-lake/curated/2026-11-25.parquet" },
+        { "type": "AWS::S3::Bucket", "ARN": "arn:aws:s3:::acme-data-lake", "accountId": "123456789012" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000005"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:04:20Z",
+      "eventSource": "dynamodb.amazonaws.com",
+      "eventName": "PutItem",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "tableName": "PipelineCheckpoints" },
+      "resources": [
+        { "type": "AWS::DynamoDB::Table", "ARN": "arn:aws:dynamodb:us-east-1:123456789012:table/PipelineCheckpoints" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000006"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:04:22Z",
+      "eventSource": "dynamodb.amazonaws.com",
+      "eventName": "GetItem",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "tableName": "PipelineCheckpoints" },
+      "resources": [
+        { "type": "AWS::DynamoDB::Table", "ARN": "arn:aws:dynamodb:us-east-1:123456789012:table/PipelineCheckpoints" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000007"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:04:25Z",
+      "eventSource": "dynamodb.amazonaws.com",
+      "eventName": "Query",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "tableName": "PipelineCheckpoints" },
+      "resources": [
+        { "type": "AWS::DynamoDB::Table", "ARN": "arn:aws:dynamodb:us-east-1:123456789012:table/PipelineCheckpoints" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000008"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:03:30Z",
+      "eventSource": "kms.amazonaws.com",
+      "eventName": "Decrypt",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "encryptionContext": { "aws:s3:arn": "arn:aws:s3:::acme-data-lake" } },
+      "resources": [
+        { "type": "AWS::KMS::Key", "ARN": "arn:aws:kms:us-east-1:123456789012:key/11111111-2222-3333-4444-555555555555" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000009"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:05:00Z",
+      "eventSource": "lambda.amazonaws.com",
+      "eventName": "InvokeFunction",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "functionName": "arn:aws:lambda:us-east-1:123456789012:function:etl-curator" },
+      "resources": [
+        { "type": "AWS::Lambda::Function", "ARN": "arn:aws:lambda:us-east-1:123456789012:function:etl-curator" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000010"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T01:06:00Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "DescribeInstances",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.0.12.4",
+      "userAgent": "boto3/1.35.0",
+      "requestParameters": { "maxResults": 50 },
+      "recipientAccountId": "123456789012",
+      "eventID": "11111111-0001-4000-8000-000000000011"
+    }
+  ]
+}

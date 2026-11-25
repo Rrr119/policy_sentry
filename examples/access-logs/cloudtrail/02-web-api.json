@@ -1,0 +1,135 @@
+{
+  "Records": [
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T09:10:00Z",
+      "eventSource": "sts.amazonaws.com",
+      "eventName": "GetCallerIdentity",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.2.0.8",
+      "userAgent": "aws-sdk-nodejs/3.0",
+      "recipientAccountId": "123456789012",
+      "eventID": "22222222-0002-4000-8000-000000000001"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T09:10:01Z",
+      "eventSource": "dynamodb.amazonaws.com",
+      "eventName": "GetItem",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.2.0.8",
+      "userAgent": "aws-sdk-nodejs/3.0",
+      "requestParameters": { "tableName": "Products" },
+      "resources": [
+        { "type": "AWS::DynamoDB::Table", "ARN": "arn:aws:dynamodb:us-east-1:123456789012:table/Products" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "22222222-0002-4000-8000-000000000002"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T09:10:02Z",
+      "eventSource": "dynamodb.amazonaws.com",
+      "eventName": "Query",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.2.0.8",
+      "userAgent": "aws-sdk-nodejs/3.0",
+      "requestParameters": { "tableName": "Products" },
+      "resources": [
+        { "type": "AWS::DynamoDB::Table", "ARN": "arn:aws:dynamodb:us-east-1:123456789012:table/Products" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "22222222-0002-4000-8000-000000000003"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T09:11:10Z",
+      "eventSource": "dynamodb.amazonaws.com",
+      "eventName": "PutItem",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.2.0.9",
+      "userAgent": "aws-sdk-nodejs/3.0",
+      "requestParameters": { "tableName": "Orders" },
+      "resources": [
+        { "type": "AWS::DynamoDB::Table", "ARN": "arn:aws:dynamodb:us-east-1:123456789012:table/Orders" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "22222222-0002-4000-8000-000000000004"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T09:11:11Z",
+      "eventSource": "sqs.amazonaws.com",
+      "eventName": "SendMessage",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.2.0.9",
+      "userAgent": "aws-sdk-nodejs/3.0",
+      "requestParameters": { "queueUrl": "https://sqs.us-east-1.amazonaws.com/123456789012/order-events" },
+      "resources": [
+        { "type": "AWS::SQS::Queue", "ARN": "arn:aws:sqs:us-east-1:123456789012:order-events" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "22222222-0002-4000-8000-000000000005"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T09:12:00Z",
+      "eventSource": "sqs.amazonaws.com",
+      "eventName": "ReceiveMessage",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.2.0.10",
+      "userAgent": "aws-sdk-go/1.50.0",
+      "requestParameters": { "queueUrl": "https://sqs.us-east-1.amazonaws.com/123456789012/order-events" },
+      "resources": [
+        { "type": "AWS::SQS::Queue", "ARN": "arn:aws:sqs:us-east-1:123456789012:order-events" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "22222222-0002-4000-8000-000000000006"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T09:12:05Z",
+      "eventSource": "sqs.amazonaws.com",
+      "eventName": "DeleteMessage",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.2.0.10",
+      "userAgent": "aws-sdk-go/1.50.0",
+      "requestParameters": { "queueUrl": "https://sqs.us-east-1.amazonaws.com/123456789012/order-events" },
+      "resources": [
+        { "type": "AWS::SQS::Queue", "ARN": "arn:aws:sqs:us-east-1:123456789012:order-events" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "22222222-0002-4000-8000-000000000007"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T09:13:00Z",
+      "eventSource": "lambda.amazonaws.com",
+      "eventName": "InvokeFunction",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.2.0.9",
+      "userAgent": "aws-sdk-nodejs/3.0",
+      "requestParameters": { "functionName": "arn:aws:lambda:us-east-1:123456789012:function:order-processor" },
+      "resources": [
+        { "type": "AWS::Lambda::Function", "ARN": "arn:aws:lambda:us-east-1:123456789012:function:order-processor" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "22222222-0002-4000-8000-000000000008"
+    },
+    {
+      "eventVersion": "1.09",
+      "eventTime": "2026-11-25T09:14:00Z",
+      "eventSource": "secretsmanager.amazonaws.com",
+      "eventName": "GetSecretValue",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "10.2.0.9",
+      "userAgent": "aws-sdk-nodejs/3.0",
+      "requestParameters": { "secretId": "prod-db-password" },
+      "resources": [
+        { "type": "AWS::SecretsManager::Secret", "ARN": "arn:aws:secretsmanager:us-east-1:123456789012:secret:prod-db-password-AbC12" }
+      ],
+      "recipientAccountId": "123456789012",
+      "eventID": "22222222-0002-4000-8000-000000000009"
+    }
+  ]
+}

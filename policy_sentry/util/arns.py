@@ -262,3 +262,15 @@ def does_arn_match(arn_to_test: str, arn_in_database: str) -> bool:
     """
     this_arn = ARN(arn_to_test)
     return this_arn.same_resource_type(arn_in_database)
+
+
+def arn_matches_format(arn_to_test: str, arn_format: str) -> bool:
+    """
+    Like :func:`does_arn_match`, but returns ``False`` for malformed ARNs
+    instead of raising. Useful when matching untrusted ARNs extracted from logs.
+    """
+    try:
+        return does_arn_match(arn_to_test, arn_format)
+    except Exception:
+        logger.debug("Unable to match ARN %s against format %s", arn_to_test, arn_format, exc_info=True)
+        return False

@@ -67,6 +67,10 @@ ACTIONS_SCHEMA = Schema(
         Optional("name"): And(Use(str)),  # ty: ignore[invalid-argument-type]
         Optional("effect"): And(Use(str), lambda s: s in ("Allow", "Deny")),  # ty: ignore[invalid-argument-type]
         "actions": And([str]),  # ty: ignore[invalid-argument-type]
+        # Optional, backward-compatible extension: bind individual actions to
+        # concrete resource ARNs (e.g. ARNs reverse-engineered from access logs).
+        # When omitted, Policy Sentry renders ARN formats exactly as before.
+        Optional("resource-arns"): {str: [str]},
     }
 )
 

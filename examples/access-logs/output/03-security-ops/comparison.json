@@ -1,0 +1,77 @@
+{
+  "group": "Security ops (IAM/S3/EC2/SNS)",
+  "actions": {
+    "before": 1201,
+    "after": 7,
+    "removed": 1194,
+    "reduction_percent": 99.42
+  },
+  "statements": {
+    "before": 1,
+    "after": 5
+  },
+  "services": {
+    "before": 4,
+    "after": 4
+  },
+  "wildcard_resource_statements": {
+    "before": 1,
+    "after": 1
+  },
+  "actions_on_wildcard_resource": {
+    "before": 1201,
+    "after": 3
+  },
+  "concrete_resources": {
+    "before": 0,
+    "after": 3
+  },
+  "before_summary": {
+    "statement_count": 1,
+    "action_pattern_count": 4,
+    "expanded_action_count": 1201,
+    "service_count": 4,
+    "services": [
+      "ec2",
+      "iam",
+      "s3",
+      "sns"
+    ],
+    "wildcard_resource_statements": 1,
+    "wildcard_resource_action_count": 1201,
+    "concrete_resource_count": 0,
+    "concrete_resources": [],
+    "full_action_wildcard": false
+  },
+  "after_summary": {
+    "statement_count": 5,
+    "action_pattern_count": 7,
+    "expanded_action_count": 7,
+    "service_count": 4,
+    "services": [
+      "ec2",
+      "iam",
+      "s3",
+      "sns"
+    ],
+    "wildcard_resource_statements": 1,
+    "wildcard_resource_action_count": 3,
+    "concrete_resource_count": 3,
+    "concrete_resources": [
+      "arn:aws:iam::123456789012:role/deploy-role",
+      "arn:aws:s3:::acme-audit-logs",
+      "arn:aws:sns:us-east-1:123456789012:security-alerts"
+    ],
+    "full_action_wildcard": false
+  },
+  "coverage": {
+    "total_calls": 7,
+    "covered_calls": 7,
+    "all_covered": true,
+    "missing": [],
+    "extra_actions": [],
+    "has_unrelated_actions": false
+  },
+  "least_privilege_verified": true,
+  "template_roundtrip_matches_policy": true
+}

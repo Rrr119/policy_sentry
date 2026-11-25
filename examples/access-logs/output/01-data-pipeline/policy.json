@@ -1,0 +1,88 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DynamodbReadTable",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:GetItem",
+                "dynamodb:Query"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:us-east-1:123456789012:table/PipelineCheckpoints"
+            ]
+        },
+        {
+            "Sid": "DynamodbWriteTable",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:PutItem"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:us-east-1:123456789012:table/PipelineCheckpoints"
+            ]
+        },
+        {
+            "Sid": "MultMultNone",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeInstances",
+                "ec2:DescribeRegions"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "KmsWriteKey",
+            "Effect": "Allow",
+            "Action": [
+                "kms:Decrypt"
+            ],
+            "Resource": [
+                "arn:aws:kms:us-east-1:123456789012:key/11111111-2222-3333-4444-555555555555"
+            ]
+        },
+        {
+            "Sid": "LambdaWriteFunction",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "arn:aws:lambda:us-east-1:123456789012:function:etl-curator"
+            ]
+        },
+        {
+            "Sid": "S3ReadObject",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::acme-data-lake/raw/events/2026/11/25/a.json",
+                "arn:aws:s3:::acme-data-lake/raw/events/2026/11/25/b.json"
+            ]
+        },
+        {
+            "Sid": "S3ListBucket",
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::acme-data-lake"
+            ]
+        },
+        {
+            "Sid": "S3WriteObject",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::acme-data-lake/curated/2026-11-25.parquet"
+            ]
+        }
+    ]
+}

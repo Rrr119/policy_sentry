@@ -1,0 +1,20 @@
+mode: crud
+name: 01-data-pipeline-crud
+read:
+- arn:aws:dynamodb:us-east-1:123456789012:table/PipelineCheckpoints
+- arn:aws:s3:::acme-data-lake/raw/events/2026/11/25/a.json
+- arn:aws:s3:::acme-data-lake/raw/events/2026/11/25/b.json
+write:
+- arn:aws:dynamodb:us-east-1:123456789012:table/PipelineCheckpoints
+- arn:aws:kms:us-east-1:123456789012:key/11111111-2222-3333-4444-555555555555
+- arn:aws:lambda:us-east-1:123456789012:function:etl-curator
+- arn:aws:s3:::acme-data-lake/curated/2026-11-25.parquet
+list:
+- arn:aws:s3:::acme-data-lake
+tagging: []
+permissions-management: []
+wildcard-only:
+  single-actions:
+  - ec2:DescribeInstances
+  - ec2:DescribeRegions
+skip-resource-constraints: []

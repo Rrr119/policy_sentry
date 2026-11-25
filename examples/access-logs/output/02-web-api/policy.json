@@ -1,0 +1,77 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DynamodbReadTable",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:GetItem",
+                "dynamodb:Query"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:us-east-1:123456789012:table/Products"
+            ]
+        },
+        {
+            "Sid": "DynamodbWriteTable",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:PutItem"
+            ],
+            "Resource": [
+                "arn:aws:dynamodb:us-east-1:123456789012:table/Orders"
+            ]
+        },
+        {
+            "Sid": "MultMultNone",
+            "Effect": "Allow",
+            "Action": [
+                "sts:GetCallerIdentity"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "LambdaWriteFunction",
+            "Effect": "Allow",
+            "Action": [
+                "lambda:InvokeFunction"
+            ],
+            "Resource": [
+                "arn:aws:lambda:us-east-1:123456789012:function:order-processor"
+            ]
+        },
+        {
+            "Sid": "SecretsmanagerReadSecret",
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetSecretValue"
+            ],
+            "Resource": [
+                "arn:aws:secretsmanager:us-east-1:123456789012:secret:prod-db-password-AbC12"
+            ]
+        },
+        {
+            "Sid": "SqsWriteQueue",
+            "Effect": "Allow",
+            "Action": [
+                "sqs:DeleteMessage",
+                "sqs:SendMessage"
+            ],
+            "Resource": [
+                "arn:aws:sqs:us-east-1:123456789012:order-events"
+            ]
+        },
+        {
+            "Sid": "SqsReadQueue",
+            "Effect": "Allow",
+            "Action": [
+                "sqs:ReceiveMessage"
+            ],
+            "Resource": [
+                "arn:aws:sqs:us-east-1:123456789012:order-events"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,57 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "MultMultNone",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeVpcs",
+                "iam:ListRoles"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "IamReadRole",
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::123456789012:role/deploy-role"
+            ]
+        },
+        {
+            "Sid": "S3ReadBucket",
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetBucketPolicy"
+            ],
+            "Resource": [
+                "arn:aws:s3:::acme-audit-logs"
+            ]
+        },
+        {
+            "Sid": "S3PermissionsmanagementBucket",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutBucketPolicy"
+            ],
+            "Resource": [
+                "arn:aws:s3:::acme-audit-logs"
+            ]
+        },
+        {
+            "Sid": "SnsWriteTopic",
+            "Effect": "Allow",
+            "Action": [
+                "sns:Publish"
+            ],
+            "Resource": [
+                "arn:aws:sns:us-east-1:123456789012:security-alerts"
+            ]
+        }
+    ]
+}

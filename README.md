@@ -278,6 +278,28 @@ Notice how the policy above recognizes the ARNs that the user supplies, along wi
 
 This rapidly speeds up the time to develop IAM policies, and ensures that all policies created limit access to exactly what your role needs access to. This way, developers only have to determine the resources that they need to access, and we abstract the complexity of IAM policies away from their development processes.
 
+### Step 4 (optional): Reverse-engineer a policy from CloudTrail logs
+
+If your current policy is wildcard-heavy, you can derive an exact-action,
+ARN-scoped policy directly from CloudTrail access logs:
+
+```bash
+policy_sentry write-policy-from-logs \
+    --input-file trail.json \
+    --compare \
+    --template-out template.yml
+```
+
+It maps each recorded API call to its canonical IAM action, binds it to the
+resource ARNs that appear in the logs, and reports a before/after comparison.
+The generated `mode: actions` template stays compatible with `write-policy`
+(an optional `resource-arns` block preserves concrete ARN constraints), and a
+classic CRUD template is available via `--template-kind crud`.
+
+Three worked CloudTrail groups, an acceptance harness, and sample before/after
+comparisons live in
+[`examples/access-logs`](examples/access-logs/README.md).
+
 ## Cheat sheets
 
 ### Policy Writing cheat sheet
